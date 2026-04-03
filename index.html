@@ -403,7 +403,6 @@ section{padding:100px 40px;}
 /* TERMINAL DEMO */
 #terminal-demo{background:transparent;}
 
-/* MAC WINDOW FRAME */
 /* SESSION PREVIEW GRID */
 .session-grid{
   display:grid;
@@ -727,7 +726,7 @@ footer{
 <div id="stats">
   <div class="stats-inner">
     <div class="stat-item reveal">
-      <span class="stat-num" data-target="V2.0">0</span>
+      <span class="stat-num" data-target="text" data-text="V2.0">V2.0</span>
       <span class="stat-label">Version</span>
     </div>
     <div class="stat-item reveal">
@@ -735,11 +734,11 @@ footer{
       <span class="stat-label">Since</span>
     </div>
     <div class="stat-item reveal">
-      <span class="stat-num" data-target="20" data-suffix="ms">0<span style="font-size:18px">ms (High-End Device)</span></span>
-      <span class="stat-label">Avg Latency</span>
+      <span class="stat-num" data-target="20" data-suffix="ms">0</span>
+      <span class="stat-label">Avg Latency <span style="font-size:10px;letter-spacing:1px;">(High-End Device)</span></span>
     </div>
     <div class="stat-item reveal">
-      <span class="stat-num" data-target="" data-suffix="%">0<span style="font-size:18px">Fully Animated Desgin</span></span>
+      <span class="stat-num" data-target="text" data-text="100%">100%</span>
       <span class="stat-label">Fully Animated</span>
     </div>
   </div>
@@ -987,6 +986,8 @@ footer{
   </div>
 </section>
 
+</main>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -1038,8 +1039,6 @@ footer{
     </div>
   </div>
 </footer>
-
-</main>
 
 <!-- THREE.JS CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -1273,20 +1272,33 @@ footer{
     entries.forEach(e=>{
       if(!e.isIntersecting)return;
       const el=e.target;
+      obs.unobserve(el);
+
+      /* Static text stats (non-numeric) */
+      if(el.dataset.target==='text'){
+        el.textContent=el.dataset.text||el.textContent;
+        return;
+      }
+
       const target=+el.dataset.target;
       const suffix=el.dataset.suffix||'';
-      if(target===0){
-        el.innerHTML='<span style="font-size:36px">~0</span><span style="font-size:18px">'+suffix+'</span>';
-        obs.unobserve(el);return;
+
+      /* Fallback for NaN or zero */
+      if(!target||isNaN(target)){
+        el.textContent='0'+(suffix?suffix:'');
+        return;
       }
-      let start=0;const dur=1400;const step=t=>{
-        const p=Math.min(t/dur,1);
+
+      const dur=1400;
+      const startTime=performance.now();
+      function step(now){
+        const elapsed=now-startTime;
+        const p=Math.min(elapsed/dur,1);
         const v=Math.round(p*p*(3-2*p)*target);
-        el.innerHTML=v+'<span style="font-size:18px">'+suffix+'</span>';
-        if(p<1)requestAnimationFrame(t2=>step(t2-t+t));
-      };
-      requestAnimationFrame(t=>step(t));
-      obs.unobserve(el);
+        el.textContent=v+suffix;
+        if(p<1)requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
     });
   },{threshold:0.5});
   document.querySelectorAll('.stat-num[data-target]').forEach(el=>obs.observe(el));

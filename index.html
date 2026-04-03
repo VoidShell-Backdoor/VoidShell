@@ -392,6 +392,77 @@ section{padding:100px 40px;}
 
 /* TERMINAL DEMO */
 #terminal-demo{background:var(--bg);}
+
+/* MAC WINDOW FRAME */
+/* SESSION PREVIEW GRID */
+.session-grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:60px;
+  align-items:center;
+}
+.session-text .section-eyebrow,
+.session-text .section-title,
+.session-text .section-sub{margin-bottom:14px;}
+.session-text .section-sub{margin-bottom:0;}
+.session-stat-row{
+  display:flex;flex-direction:column;gap:12px;margin-top:28px;
+}
+.session-stat{
+  display:flex;align-items:center;gap:12px;
+  font-size:12px;letter-spacing:2px;color:rgba(0,242,255,.5);
+}
+.session-stat-dot{
+  width:6px;height:6px;border-radius:50%;flex-shrink:0;
+}
+@media(max-width:900px){
+  .session-grid{grid-template-columns:1fr;}
+}
+
+.mac-window{
+  background:rgba(4,6,14,.95);
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:
+    0 0 0 1px rgba(0,242,255,.06),
+    0 0 50px rgba(0,242,255,.12),
+    0 40px 80px rgba(0,0,0,.7),
+    inset 0 1px 0 rgba(0,242,255,.07);
+  transform:perspective(900px) rotateY(6deg) rotateX(3deg) translateZ(20px);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s;
+  animation:macFloat 6s ease-in-out infinite;
+}
+.mac-window:hover{
+  transform:perspective(900px) rotateY(1deg) rotateX(0.5deg) translateZ(32px);
+  box-shadow:
+    0 0 0 1px rgba(0,242,255,.15),
+    0 0 70px rgba(0,242,255,.22),
+    0 50px 100px rgba(0,0,0,.6);
+  animation-play-state:paused;
+}
+@keyframes macFloat{
+  0%,100%{transform:perspective(900px) rotateY(6deg) rotateX(3deg) translateZ(20px) translateY(0);}
+  50%{transform:perspective(900px) rotateY(6deg) rotateX(3deg) translateZ(20px) translateY(-12px);}
+}
+.mac-bar{
+  background:rgba(0,0,0,.55);
+  border-bottom:1px solid var(--border);
+  padding:12px 18px;
+  display:flex;align-items:center;gap:8px;
+  backdrop-filter:blur(10px);
+}
+.mac-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.mac-dot.r{background:#ff5f57;box-shadow:0 0 6px rgba(255,95,87,.6);}
+.mac-dot.y{background:#febc2e;box-shadow:0 0 6px rgba(254,188,46,.6);}
+.mac-dot.g{background:#28c840;box-shadow:0 0 6px rgba(40,200,64,.6);}
+.mac-title{
+  flex:1;text-align:center;font-size:11px;letter-spacing:3px;
+  color:rgba(0,242,255,.35);text-transform:uppercase;
+}
+.mac-controls{display:flex;align-items:center;margin-left:auto;}
+.mac-screen{display:block;line-height:0;}
+.mac-screen img{display:block;width:100%;height:auto;}
 .terminal-wrap{
   background:rgba(0,0,0,.6);border:1px solid var(--border);border-radius:6px;
   overflow:hidden;
@@ -824,51 +895,55 @@ footer{
 <!-- TERMINAL DEMO -->
 <section id="terminal-demo">
   <div class="container">
-    <div class="section-eyebrow reveal">Live Demo</div>
-    <h2 class="section-title reveal">Session Preview</h2>
-    <p class="section-sub reveal">
-      A snapshot of a real VoidShell operator session — from connection to full shell access and file exfiltration.
-    </p>
-    <div class="terminal-wrap reveal">
-      <div class="term-bar">
-        <div class="tbar-dot r"></div><div class="tbar-dot y"></div><div class="tbar-dot g"></div>
-        <div class="tbar-title">voidshell — operator session — SESSION_01</div>
+    <div class="session-grid">
+
+      <!-- Left — mac window -->
+      <div class="reveal">
+        <div class="mac-window">
+          <div class="mac-bar">
+            <div class="mac-dot r"></div>
+            <div class="mac-dot y"></div>
+            <div class="mac-dot g"></div>
+            <div class="mac-title">voidshell — operator dashboard — SESSION_01</div>
+            <div class="mac-controls">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);animation:blink 1.8s ease-in-out infinite;display:inline-block;"></span>
+              <span style="font-size:9px;letter-spacing:2px;color:rgba(0,242,255,.4);text-transform:uppercase;margin-left:6px;">Live</span>
+            </div>
+          </div>
+          <div class="mac-screen">
+            <img src="Pre.png" alt="VoidShell Session Preview"
+              onerror="this.parentNode.innerHTML='<div class=\'preview-placeholder\'><div class=\'preview-placeholder-inner\'>[ Operator Dashboard ]</div><div style=\'font-size:9px;letter-spacing:3px;color:rgba(0,242,255,.15)\'>PRE.PNG — LOAD LOCALLY</div></div>'" />
+          </div>
+        </div>
       </div>
-      <div class="term-body">
-        <div class="tl"><span class="tp">VOID&gt;</span><span class="tc"> init --host 192.168.1.13 --port 4444 --encrypt</span></div>
-        <div class="tl"><span class="tok to"> [+] TCP handshake complete</span></div>
-        <div class="tl"><span class="tok to"> [+] AES-256 channel active — key exchanged</span></div>
-        <div class="tl"><span class="tok to"> [+] Implant version: v2.4.1 — stealth mode ON</span></div>
-        <br>
-        <div class="tl"><span class="tp">VOID&gt;</span><span class="tc"> sessions --list</span></div>
-        <div class="to"> ┌──────────────────────────────────────────────────┐</div>
-        <div class="to"> │  ID   HOST            OS           STATUS        │</div>
-        <div class="to"> │  01   192.168.1.20    Win10 x64    <span style="color:var(--green)">ACTIVE</span>        │</div>
-        <div class="to"> │  02   192.168.1.34    Win11 x64    <span style="color:var(--green)">ACTIVE</span>        │</div>
-        <div class="to"> │  03   192.168.1.55    Win10 x86    <span style="color:var(--orange)">IDLE</span>          │</div>
-        <div class="to"> └──────────────────────────────────────────────────┘</div>
-        <br>
-        <div class="tl"><span class="tp">VOID&gt;</span><span class="tc"> shell --target 01</span></div>
-        <div class="tl"><span class="tok to"> [+] Shell session opened on SESSION_01</span></div>
-        <div class="to"> C:\Users\Administrator&gt; whoami</div>
-        <div class="to"> target\administrator</div>
-        <div class="to"> C:\Users\Administrator&gt; systeminfo | findstr /C:"OS Name"</div>
-        <div class="to"> OS Name: Microsoft Windows 10 Pro</div>
-        <div class="to"> C:\Users\Administrator&gt; ipconfig /all | findstr IPv4</div>
-        <div class="to"> IPv4 Address. . . : <span style="color:var(--purple)">192.168.1.20</span></div>
-        <br>
-        <div class="tl"><span class="tp">VOID&gt;</span><span class="tc"> screenshot --target 01</span></div>
-        <div class="tl"><span class="tok to"> [+] Screenshot captured — 1920×1080 — transferred 246 KB</span></div>
-        <br>
-        <div class="tl"><span class="tp">VOID&gt;</span><span class="tc"> files --download "C:\Users\Administrator\Desktop\report.pdf" --out ./loot/</span></div>
-        <div class="tl"><span class="tok to"> [+] Transfer complete — 1.2 MB in 0.8s</span></div>
-        <br>
-        <div class="tl"><span class="tp">VOID&gt;</span><span class="tc"> <span class="cursor"></span></span></div>
+
+      <!-- Right — text -->
+      <div class="session-text reveal">
+        <div class="section-eyebrow">Live Demo</div>
+        <h2 class="section-title">Session Preview</h2>
+        <p class="section-sub">
+          A snapshot of a real VoidShell operator session — from connection to full shell access and file exfiltration in seconds.
+        </p>
+        <div class="session-stat-row">
+          <div class="session-stat">
+            <div class="session-stat-dot" style="background:var(--green);box-shadow:0 0 5px var(--green);"></div>
+            AES-256 encrypted channel — keys never stored
+          </div>
+          <div class="session-stat">
+            <div class="session-stat-dot" style="background:var(--cyan);box-shadow:0 0 5px var(--cyan);"></div>
+            Real-time shell, screenshot &amp; file transfer
+          </div>
+          <div class="session-stat">
+            <div class="session-stat-dot" style="background:var(--purple);box-shadow:0 0 5px var(--purple);"></div>
+            Multi-stream multiplexed over one TCP socket
+          </div>
+          <div class="session-stat">
+            <div class="session-stat-dot" style="background:var(--orange);box-shadow:0 0 5px var(--orange);"></div>
+            Low-footprint implant — stealth mode ON
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="preview-img-wrap reveal" style="margin-top:48px;">
-      <img src="Pre.png" alt="VoidShell Session Preview"
-        onerror="this.parentNode.innerHTML='<div class=\'preview-placeholder\'><div class=\'preview-placeholder-inner\'>[ Session Preview ]</div><div style=\'font-size:9px;letter-spacing:3px;color:rgba(0,242,255,.15)\'>PRE.PNG — LOAD LOCALLY</div></div>'" />
+
     </div>
   </div>
 </section>

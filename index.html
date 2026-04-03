@@ -366,41 +366,26 @@ section{padding:100px 40px;}
 .tpath{color:var(--purple);}
 
 /* ═══════════════════════════════════════════════════════
-   UI PREVIEW CARDS
+   UI PREVIEW IMAGE
 ═══════════════════════════════════════════════════════ */
 #preview{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);}
-.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.preview-card{
-  background:rgba(0,0,0,.45);border:1px solid var(--border);border-radius:5px;
-  overflow:hidden;transition:border-color .3s,box-shadow .3s;cursor:default;
+.preview-img-wrap{
+  position:relative;border-radius:6px;overflow:hidden;
+  border:1px solid var(--border);
+  box-shadow:0 0 40px rgba(0,242,255,.1),0 0 100px rgba(0,0,0,.6);
+  transition:box-shadow .35s,border-color .35s;
 }
-.preview-card:hover{border-color:rgba(0,242,255,.3);box-shadow:0 0 20px rgba(0,242,255,.08);}
-.pc-header{
-  padding:10px 14px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:8px;
-  font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,242,255,.35);
+.preview-img-wrap:hover{
+  border-color:rgba(0,242,255,.3);
+  box-shadow:0 0 60px rgba(0,242,255,.18),0 0 120px rgba(0,0,0,.5);
 }
-.pc-dot{width:7px;height:7px;border-radius:50%;}
-.pc-body{padding:16px 14px;}
-.pc-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(0,242,255,.3);margin-bottom:8px;}
-.pc-item{
-  background:rgba(0,242,255,.04);border:1px solid var(--border);
-  border-radius:3px;padding:8px 12px;margin-bottom:6px;
-  font-size:11px;color:rgba(0,242,255,.55);
-  display:flex;justify-content:space-between;align-items:center;
+.preview-img-wrap img{
+  display:block;width:100%;height:auto;
 }
-.pc-item span{font-size:9px;letter-spacing:1px;}
-.pc-item .online{color:var(--green);}
-.pc-item .idle{color:var(--orange);}
-.pc-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.pc-bar-label{font-size:9px;color:rgba(0,242,255,.35);width:40px;text-align:right;letter-spacing:1px;}
-.pc-bar-track{flex:1;height:4px;background:rgba(0,0,0,.5);border-radius:2px;overflow:hidden;}
-.pc-bar-fill{height:100%;border-radius:2px;box-shadow:0 0 5px currentColor;}
-.pc-log{font-size:10px;line-height:1.7;color:rgba(0,242,255,.35);}
-.pc-log .lok{color:var(--green);}
-.pc-log .lerr{color:var(--red);}
-.pc-log .lwarn{color:var(--orange);}
+.preview-img-wrap::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent 60%,rgba(2,3,8,.55) 100%);
+}
 
 /* ═══════════════════════════════════════════════════════
    TECH STACK
@@ -469,7 +454,6 @@ footer{
   .features-grid{grid-template-columns:repeat(2,1fr);}
   .steps{grid-template-columns:repeat(2,1fr);}
   .steps::before{display:none;}
-  .preview-grid{grid-template-columns:1fr;}
   .footer-top{grid-template-columns:1fr 1fr;}
   .stats-inner{grid-template-columns:repeat(2,1fr);}
   .stat-item:nth-child(2){border-right:none;}
@@ -812,92 +796,12 @@ footer{
 <section id="preview">
   <div class="container">
     <div class="section-eyebrow reveal">Interface</div>
-    <h2 class="section-title reveal">Operator Dashboard Panels</h2>
+    <h2 class="section-title reveal">Operator Dashboard</h2>
     <p class="section-sub reveal">
-      Three core panels give you full situational awareness — session management, system resource monitoring, and live event logging.
+      A look at the VoidShell operator interface — real-time session control, system metrics, and live event feeds all in one place.
     </p>
-    <div class="preview-grid">
-
-      <!-- Session list -->
-      <div class="preview-card reveal">
-        <div class="pc-header">
-          <div class="pc-dot" style="background:var(--cyan);box-shadow:0 0 5px var(--cyan);"></div>
-          Sessions
-        </div>
-        <div class="pc-body">
-          <div class="pc-label">Active Targets</div>
-          <div class="pc-item">SESSION_01 — Win10 <span class="online">● ACTIVE</span></div>
-          <div class="pc-item">SESSION_02 — Win11 <span class="online">● ACTIVE</span></div>
-          <div class="pc-item">SESSION_03 — Win10 <span class="idle">● IDLE</span></div>
-          <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px;">
-            <div class="pc-label">Selected — SESSION_01</div>
-            <div class="pc-item" style="flex-direction:column;align-items:flex-start;gap:2px;">
-              <span>IP: 192.168.1.20</span>
-              <span>OS: Windows 10 Pro x64</span>
-              <span>User: administrator</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- System metrics -->
-      <div class="preview-card reveal">
-        <div class="pc-header">
-          <div class="pc-dot" style="background:var(--green);box-shadow:0 0 5px var(--green);"></div>
-          System Metrics
-        </div>
-        <div class="pc-body">
-          <div class="pc-label">Target — SESSION_01</div>
-          <div class="pc-bar-row">
-            <div class="pc-bar-label">CPU</div>
-            <div class="pc-bar-track"><div class="pc-bar-fill" style="width:38%;background:var(--cyan);color:var(--cyan);"></div></div>
-            <div style="font-size:10px;color:rgba(0,242,255,.5);width:28px;text-align:right;">38%</div>
-          </div>
-          <div class="pc-bar-row">
-            <div class="pc-bar-label">RAM</div>
-            <div class="pc-bar-track"><div class="pc-bar-fill" style="width:61%;background:var(--green);color:var(--green);"></div></div>
-            <div style="font-size:10px;color:rgba(0,242,255,.5);width:28px;text-align:right;">61%</div>
-          </div>
-          <div class="pc-bar-row">
-            <div class="pc-bar-label">DISK</div>
-            <div class="pc-bar-track"><div class="pc-bar-fill" style="width:74%;background:var(--orange);color:var(--orange);"></div></div>
-            <div style="font-size:10px;color:rgba(0,242,255,.5);width:28px;text-align:right;">74%</div>
-          </div>
-          <div class="pc-bar-row">
-            <div class="pc-bar-label">NET</div>
-            <div class="pc-bar-track"><div class="pc-bar-fill" style="width:22%;background:var(--purple);color:var(--purple);"></div></div>
-            <div style="font-size:10px;color:rgba(0,242,255,.5);width:28px;text-align:right;">22%</div>
-          </div>
-          <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:10px;">
-            <div class="pc-label">Uptime</div>
-            <div style="font-size:13px;color:var(--cyan);letter-spacing:2px;">02:14:38</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Event log -->
-      <div class="preview-card reveal">
-        <div class="pc-header">
-          <div class="pc-dot" style="background:var(--purple);box-shadow:0 0 5px var(--purple);"></div>
-          Event Log
-        </div>
-        <div class="pc-body">
-          <div class="pc-label">Live Feed</div>
-          <div class="pc-log">
-            <div><span class="lok">[OK]</span> SESSION_01 connected</div>
-            <div><span class="lok">[OK]</span> AES-256 channel established</div>
-            <div><span class="lok">[OK]</span> SESSION_02 connected</div>
-            <div><span class="lwarn">[!!]</span> SESSION_03 timeout — retrying</div>
-            <div><span class="lok">[OK]</span> Shell opened on SESSION_01</div>
-            <div><span class="lok">[OK]</span> Screenshot captured — 246KB</div>
-            <div><span class="lok">[OK]</span> File transfer complete — 1.2MB</div>
-            <div><span class="lwarn">[!!]</span> SESSION_03 idle — waiting</div>
-            <div><span class="lok">[OK]</span> Clipboard sync active</div>
-            <div><span class="lok">[OK]</span> All streams nominal</div>
-          </div>
-        </div>
-      </div>
-
+    <div class="preview-img-wrap reveal">
+      <img src="Pre.png" alt="VoidShell Operator Dashboard Preview" />
     </div>
   </div>
 </section>

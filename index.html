@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>VoidShell 3D</title>
+<title>VoidShell V2.0</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -25,7 +25,6 @@ body{
   font-family:'Consolas','Courier New',monospace;
   color:var(--cyan);
   overflow-x:hidden;
-  perspective:1200px;
 }
 
 /* THREE.JS CANVAS */
@@ -1051,7 +1050,7 @@ footer{
 ══════════════════════════════════════════════ */
 (function(){
   const canvas = document.getElementById('threeCanvas');
-  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
   renderer.setSize(window.innerWidth,window.innerHeight);
   renderer.setClearColor(0x020308,1);

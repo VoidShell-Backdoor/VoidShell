@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>VoidShell V2.0</title>
+<title>VoidShell 3D</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -21,7 +21,7 @@
 }
 html{scroll-behavior:smooth;}
 body{
-  background:var(--bg);
+  background:transparent;
   font-family:'Consolas','Courier New',monospace;
   color:var(--cyan);
   overflow-x:hidden;
@@ -285,7 +285,7 @@ section{padding:100px 40px;}
 /* STATS BAR */
 #stats{
   padding:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  background:rgba(0,0,0,.35);
+  background:transparent;
   transform-style:preserve-3d;
 }
 .stats-inner{
@@ -316,7 +316,7 @@ section{padding:100px 40px;}
 .stat-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(0,242,255,.4);}
 
 /* ABOUT */
-#about{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);}
+#about{background:transparent;}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
 .about-text p{font-size:14px;line-height:1.9;color:var(--text);margin-bottom:18px;}
 .about-points{display:flex;flex-direction:column;gap:14px;margin-top:30px;}
@@ -339,7 +339,7 @@ section{padding:100px 40px;}
 .ap-body .ap-desc{font-size:12.5px;color:rgba(0,242,255,.5);line-height:1.55;}
 
 /* FEATURES */
-#features{background:var(--bg);}
+#features{background:transparent;}
 .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 .feat-card{
   background:var(--cyan-faint);border:1px solid var(--border);border-radius:5px;
@@ -375,7 +375,7 @@ section{padding:100px 40px;}
 }
 
 /* HOW IT WORKS */
-#how{background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);}
+#how{background:transparent;}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
 .steps::before{
   content:'';position:absolute;top:38px;left:calc(12.5%);
@@ -402,7 +402,7 @@ section{padding:100px 40px;}
 .step-desc{font-size:12.5px;color:rgba(0,242,255,.45);line-height:1.6;}
 
 /* TERMINAL DEMO */
-#terminal-demo{background:var(--bg);}
+#terminal-demo{background:transparent;}
 
 /* MAC WINDOW FRAME */
 /* SESSION PREVIEW GRID */
@@ -502,7 +502,7 @@ section{padding:100px 40px;}
 .tpath{color:var(--purple);}
 
 /* UI PREVIEW */
-#preview{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);}
+#preview{background:transparent;}
 .preview-img-wrap{
   position:relative;border-radius:6px;overflow:hidden;
   border:1px solid var(--border);
@@ -533,7 +533,7 @@ section{padding:100px 40px;}
 }
 
 /* TECH STACK */
-#tech{background:var(--bg);}
+#tech{background:transparent;}
 .tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
 .tech-card{
   background:var(--cyan-faint);border:1px solid var(--border);border-radius:4px;
@@ -558,7 +558,7 @@ section{padding:100px 40px;}
 /* FOOTER */
 footer{
   border-top:1px solid var(--border);
-  background:rgba(0,0,0,.5);
+  background:transparent;
   padding:60px 40px 40px;
   position:relative;z-index:10;
   transform:perspective(1000px) rotateX(-1deg);

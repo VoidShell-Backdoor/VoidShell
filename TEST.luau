@@ -1,6 +1,7 @@
 local LoadStart = tick()
 Abysall.SavePath = "Doors/Game"
 
+
 --[[ ============================================================================
      WindUI Interface Layer
      ----------------------------------------------------------------------------
@@ -15,6 +16,67 @@ local Library, Toggles, Options
 do
 
 local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/refs/heads/main/dist/main.lua"))()
+
+WindUI:AddTheme({
+    Name = "Sonicss", -- A more premium name for the 'Best Blue UI'
+    
+    -- Main Brand Colors
+    Accent = Color3.fromHex("#007BFF"), -- Vibrant Electric Blue
+    Background = Color3.fromHex("#0A0E14"), -- Deep Midnight (Very dark blue-tinted black)
+    BackgroundTransparency = 0.1,
+    Outline = Color3.fromHex("#1E293B"), -- Subtle Slate Blue Border
+    Text = Color3.fromHex("#F8FAFC"), -- Crisp Off-White
+    Placeholder = Color3.fromHex("#38BDF8"), -- Muted Slate
+    Button = Color3.fromHex("#16213E"), -- Dark Navy Button
+    Icon = Color3.fromHex("#38BDF8"), -- Sky Blue Icons
+    
+    -- Interaction
+    Hover = Color3.fromHex("#38BDF8"), -- Brighter Blue on Hover
+    
+    -- Window Styling
+    WindowBackground = Color3.fromHex("#0A0E14"),
+    WindowShadow = Color3.fromHex("#000000"),
+    
+    -- Dialogs & Popups
+    DialogBackground = Color3.fromHex("#0F172A"),
+    DialogBackgroundTransparency = 0.1,
+    DialogTitle = Color3.fromHex("#38BDF8"),
+    DialogContent = Color3.fromHex("#CBD5E1"),
+    DialogIcon = Color3.fromHex("#38BDF8"),
+    
+    -- Topbar
+    WindowTopbarButtonIcon = Color3.fromHex("#38BDF8"),
+    WindowTopbarTitle = Color3.fromHex("#F8FAFC"),
+    WindowTopbarAuthor = Color3.fromHex("#94A3B8"),
+    WindowTopbarIcon = Color3.fromHex("#007BFF"),
+    
+    -- Navigation
+    TabBackground = Color3.fromHex("#38BDF8"),
+    TabTitle = Color3.fromHex("#F8FAFC"),
+    TabIcon = Color3.fromHex("#38BDF8"),
+    
+    -- Elements
+    ElementBackground = Color3.fromHex("#38BDF8"),
+    ElementTitle = Color3.fromHex("#F8FAFC"),
+    ElementDesc = Color3.fromHex("#94A3B8"),
+    ElementIcon = Color3.fromHex("#38BDF8"),
+    
+    -- Interactive Elements (Toggles, Sliders, etc)
+    Toggle = Color3.fromHex("#007BFF"), -- Accent Blue
+    ToggleBar = Color3.fromHex("#F8FAFC"),
+    
+    Checkbox = Color3.fromHex("#1E293B"),
+    CheckboxIcon = Color3.fromHex("#007BFF"),
+    
+    Slider = Color3.fromHex("#1E293B"),
+    SliderThumb = Color3.fromHex("#007BFF"),
+    
+    PopupBackground = Color3.fromHex("#38BDF8"),
+    PopupBackgroundTransparency = 0.1,
+    PopupTitle = Color3.fromHex("#38BDF8"),
+    PopupContent = Color3.fromHex("#F8FAFC"),
+    PopupIcon = Color3.fromHex("#38BDF8"),
+})
 
 
 local UserInputService = game:GetService("UserInputService")
@@ -784,97 +846,16 @@ if not Library.Scheme then
 end
 
 function NotificationLibrary:Notify(TitleText, Desc, Delay)
-	task.spawn(function()
-		local Notification = Instance.new("Frame")
-		local Line = Instance.new("Frame")
-		local Warning = Instance.new("ImageLabel")
-		local UICorner = Instance.new("UICorner")
-        local UICorner2 = Instance.new("UICorner")
-		local Title = Instance.new("TextLabel")
-		local Description = Instance.new("TextLabel")
-
-		Notification.Name = "Notification"
-		Notification.Parent = Container
-		Notification.BackgroundColor3 = Library.Scheme.BackgroundColor
-		Notification.BackgroundTransparency = 0.4
-		Notification.BorderSizePixel = 0
-		Notification.Position = UDim2.new(1, 5, 0, 60 + (60 * NotificationLibrary.LiveNotifications))
-		Notification.Size = UDim2.new(0, 420, 0, 50)
-        Notification:SetAttribute("ID", NotificationLibrary.Notifications)
-        Notification:SetAttribute("CurrentPosition", Notification.Position)
-
-		Line.Name = "Line"
-		Line.Parent = Notification
-		Line.BackgroundColor3 = Library.Scheme.AccentColor
-		Line.BorderSizePixel = 0
-		Line.Position = UDim2.new(0, 0, 1, -3)
-		Line.Size = UDim2.new(0, 0, 0, 3)
-
-		Warning.Name = "Warning"
-		Warning.Parent = Notification
-		Warning.BackgroundTransparency = 1
-		Warning.Position = UDim2.new(0, 10, 0, 5)
-		Warning.Size = UDim2.new(0, 40, 0, 40)
-		Warning.Image = "rbxassetid://3944668821"
-		Warning.ImageColor3 = Library.Scheme.AccentColor
-		Warning.ScaleType = Enum.ScaleType.Fit
-
-		UICorner.CornerRadius = UDim.new(0, 20)
-		UICorner.Parent = Warning
-
-        UICorner2.CornerRadius = UDim.new(0, 4)
-        UICorner2.Parent = Notification
-
-		Title.Name = "Title"
-		Title.Parent = Notification
-		Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		Title.BackgroundTransparency = 1.000
-		Title.Position = UDim2.new(0, 60, 0.155, 0)
-		Title.Size = UDim2.new(0, 205, 0, 15)
-		Title.Text = TitleText or "..."
-		Title.TextColor3 = Library.Scheme.FontColor
-		Title.TextSize = 10
-		Title.TextStrokeTransparency = 0.75
-		Title.TextXAlignment = Enum.TextXAlignment.Left
-
-		Description.Name = "Description"
-		Description.Parent = Notification
-		Description.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		Description.BackgroundTransparency = 1.000
-		Description.Position = UDim2.new(0, 60, 0.483, 0)
-		Description.Size = UDim2.new(0, 205, 0, 18)
-		Description.Text = Desc or "..."
-		Description.TextColor3 = Library.Scheme.FontColor
-        Description.TextTransparency = 0.1
-		Description.TextSize = 10
-		Description.TextStrokeTransparency = 0.75
-		Description.TextXAlignment = Enum.TextXAlignment.Left
-		
-		NotificationLibrary.LiveNotifications = NotificationLibrary.LiveNotifications + 1
-        NotificationLibrary.Notifications = NotificationLibrary.Notifications + 1
-		Services.TweenService:Create(Notification, TweenInfo.new(1, Enum.EasingStyle.Exponential), {Position = UDim2.new(1, -370, 0, Notification.Position.Y.Offset)}):Play()
-
-		task.wait(0.25)
-		if typeof(Delay) == "Instance" then
-            Delay.Destroying:Wait()
-        else
-            Services.TweenService:Create(Line, TweenInfo.new(Delay - 0.25, Enum.EasingStyle.Linear), {Size = UDim2.new(0, 400, 0, 3)}):Play()
-            task.wait(Delay - 0.25)
-        end
-
-        Notification:SetAttribute("Destroying", true)
-		Services.TweenService:Create(Notification, TweenInfo.new(0.75, Enum.EasingStyle.Exponential, Enum.EasingDirection.In), {Position = UDim2.new(1, 5, 0, Notification.Position.Y.Offset)}):Play()
-		NotificationLibrary.LiveNotifications = NotificationLibrary.LiveNotifications - 1
-        
-        for Index, Object in (Container:GetChildren()) do
-            if Object.Name == "Notification" and Object:GetAttribute("ID") and Object:GetAttribute("ID") > Notification:GetAttribute("ID") and Object:GetAttribute("Destroying") ~= true and Object.Position.Y.Offset ~= 60 then
-                Object:SetAttribute("CurrentPosition", UDim2.new(1, -450, 0, Object:GetAttribute("CurrentPosition").Y.Offset - 60))
-                Services.TweenService:Create(Object, TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut), {Position = UDim2.new(1, -370, 0, Object:GetAttribute("CurrentPosition").Y.Offset)}):Play()
-            end
-        end
-        task.wait(0.75)
-		Notification:Destroy()
-	end)
+	local duration = 5
+	if typeof(Delay) == "number" then
+		duration = Delay
+	end
+	-- Use OldNotify (the WindUI-routed notifier); Library.Notify is reassigned later by this script.
+	Library:OldNotify({
+		Title = TitleText or "...",
+		Description = (Desc and Desc ~= "" and Desc ~= "...") and Desc or nil,
+		Time = duration,
+	})
 end
 
 Globals.DoorsNotify = function(Options)
@@ -1449,16 +1430,28 @@ Functions.GetRandomCode = function()
 end
 
 local Window = Library:CreateWindow({
-    Title = "Abysall Hub  -  discord.gg/5jwbZcqjVF",
-    Footer = "Abysall Hub - discord.gg/5jwbZcqjVF",
-    NotifySide = "Right",
-    ShowCustomCursor = false,
-    AutoShow = true,
-    Center = true,
-	TabPadding = 3,
-	MenuFadeTime = 0,
-    CornerRadius = 2,
+    Title = "Midas Hub",
+    Author = "V1",
+    Folder = "Midas Hub",
+    Icon = "rbxassetid://71502652708228",
+    Transparency = true,
+    NewElements = true,
+    HideSearchBar = false,
+	
+    Topbar = {
+        Height = 44,
+        ButtonsType = "Mac", 
+    },
+    OpenButton = {
+        Enabled = true,
+        Draggable = true,
+        Title = "Midas Hub",
+        CornerRadius = UDim.new(1, 0),
+        Color = ColorSequence.new(Color3.fromHex("#0195FF"), Color3.fromHex("#9500FF"))
+    }
 })
+
+WindUI:SetTheme("Sonicss")
 
 Library:ApplyInfoTab(Window)
 local Tabs = {

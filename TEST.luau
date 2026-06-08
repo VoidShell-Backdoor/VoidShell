@@ -77,6 +77,7 @@ WindUI:AddTheme({
     PopupIcon = Color3.fromHex("#38BDF8"),
 })
 
+
 local UserInputService = game:GetService("UserInputService")
 
 Library = {}
@@ -496,6 +497,60 @@ function Library:CreateWindow(opts)
 
 	function win:AddTab(name, icon)
 		return wrapTab(self:Tab({ Title = name, Icon = mapIcon(icon) }))
+	end
+
+	-- ---- Desktop mouse support -------------------------------------------
+	-- While the menu is OPEN (not minimized) the cursor is freed so it can
+	-- click elements; when the menu is CLOSED/minimized the previous lock
+	-- state is restored. This only ever touches the cursor when a real mouse
+	-- is present (UserInputService.MouseEnabled), checked live every frame, so
+	-- pure touch devices are never affected while touch-laptops (touch + mouse)
+	-- still get the behavior.
+	do
+		local RunService = game:GetService("RunService")
+		local menuOpen = true -- WindUI windows start expanded
+		local savedBehavior, savedIcon = nil, nil
+
+		local function hasMouse()
+			return UserInputService.MouseEnabled
+		end
+
+		local function freeCursor()
+			if not hasMouse() then return end
+			if savedBehavior == nil then
+				savedBehavior = UserInputService.MouseBehavior
+				savedIcon = UserInputService.MouseIconEnabled
+			end
+			UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+			UserInputService.MouseIconEnabled = true
+		end
+
+		local function restoreCursor()
+			if not hasMouse() then return end
+			if savedBehavior ~= nil then
+				UserInputService.MouseBehavior = savedBehavior
+				UserInputService.MouseIconEnabled = savedIcon
+				savedBehavior, savedIcon = nil, nil
+			end
+		end
+
+		pcall(function() win:OnOpen(function() menuOpen = true; freeCursor() end) end)
+		pcall(function() win:OnClose(function() menuOpen = false; restoreCursor() end) end)
+
+		freeCursor() -- the window is shown on creation
+
+		local conn = RunService.RenderStepped:Connect(function()
+			if menuOpen and hasMouse() then
+				-- the game may try to re-lock the cursor each frame; keep it free
+				if UserInputService.MouseBehavior ~= Enum.MouseBehavior.Default then
+					UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+				end
+				if not UserInputService.MouseIconEnabled then
+					UserInputService.MouseIconEnabled = true
+				end
+			end
+		end)
+		table.insert(Library._keyConnections, conn)
 	end
 
 	return win

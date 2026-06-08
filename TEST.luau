@@ -1,7 +1,6 @@
 local LoadStart = tick()
 Abysall.SavePath = "Doors/Game"
 
-
 --[[ ============================================================================
      WindUI Interface Layer
      ----------------------------------------------------------------------------
@@ -77,7 +76,6 @@ WindUI:AddTheme({
     PopupContent = Color3.fromHex("#F8FAFC"),
     PopupIcon = Color3.fromHex("#38BDF8"),
 })
-
 
 local UserInputService = game:GetService("UserInputService")
 
@@ -465,17 +463,28 @@ end
 function Library:CreateWindow(opts)
 	opts = opts or {}
 	local win = WindUI:CreateWindow({
-		Title = opts.Title or "Abysall Hub",
-		Author = opts.Footer,
-		Icon = "door-open",
-		Folder = "AbysallHub",
-		Size = UDim2.fromOffset(600, 470),
-		Theme = "Dark",
-		Resizable = true,
+		Title = "Midas Hub",
+		Author = "V1",
+		Folder = "Midas Hub",
+		Icon = "rbxassetid://71502652708228",
+		Transparency = true,
+		NewElements = true,
 		HideSearchBar = false,
+
+		Topbar = {
+			Height = 44,
+			ButtonsType = "Mac",
+		},
+		OpenButton = {
+			Enabled = true,
+			Draggable = true,
+			Title = "Midas Hub",
+			CornerRadius = UDim.new(1, 0),
+			Color = ColorSequence.new(Color3.fromHex("#0195FF"), Color3.fromHex("#9500FF")),
+		},
 	})
 	Library._window = win
-
+        WindUI:SetTheme("Sonicss")
 	pcall(function()
 		win:OnDestroy(function()
 			if Library._unloaded then return end
@@ -1430,28 +1439,16 @@ Functions.GetRandomCode = function()
 end
 
 local Window = Library:CreateWindow({
-    Title = "Midas Hub",
-    Author = "V1",
-    Folder = "Midas Hub",
-    Icon = "rbxassetid://71502652708228",
-    Transparency = true,
-    NewElements = true,
-    HideSearchBar = false,
-	
-    Topbar = {
-        Height = 44,
-        ButtonsType = "Mac", 
-    },
-    OpenButton = {
-        Enabled = true,
-        Draggable = true,
-        Title = "Midas Hub",
-        CornerRadius = UDim.new(1, 0),
-        Color = ColorSequence.new(Color3.fromHex("#0195FF"), Color3.fromHex("#9500FF"))
-    }
+    Title = "Abysall Hub  -  discord.gg/5jwbZcqjVF",
+    Footer = "Abysall Hub - discord.gg/5jwbZcqjVF",
+    NotifySide = "Right",
+    ShowCustomCursor = false,
+    AutoShow = true,
+    Center = true,
+	TabPadding = 3,
+	MenuFadeTime = 0,
+    CornerRadius = 2,
 })
-
-WindUI:SetTheme("Sonicss")
 
 Library:ApplyInfoTab(Window)
 local Tabs = {

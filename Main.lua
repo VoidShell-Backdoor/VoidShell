@@ -1,7 +1,6 @@
 local LoadStart = tick()
 Abysall.SavePath = "Doors/Game"
 
-
 local Library, Toggles, Options
 do
 
